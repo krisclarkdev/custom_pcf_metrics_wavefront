@@ -68,8 +68,11 @@ res = cc.apps().get()
 apps = res.resources
 AppsCounter = 0
 for r in apps:
+    si = r.service_bindings_url
+    si = si.replace('/v2/apps/','')
+    si = si.replace('/service_bindings','')
     AppState = r.state
-    AppsTags = ' AppsName=' + r.name + ',AppsGUID="' + r.guid + '",state=' + AppState + ' '
+    AppsTags = ' AppsName=' + r.name + ',AppsGUID="' + r.guid + '",siGUID="' + si + '",state=' + AppState + ' '
     AppsCounter +=1
     sendMetric('echo ' + AppsName + ' ' + str(1) + ' source=' + r.name + AppsTags)
     
